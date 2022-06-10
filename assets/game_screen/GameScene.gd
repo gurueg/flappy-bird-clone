@@ -6,10 +6,12 @@ const background_size : float = 384.0
 const tubes_air_space_min = 30
 const tubes_scene = preload("../tubes/Tubes.tscn")
 const bird_speed : float = 80.0
+const tubes_max_height : float = 90.0
+const tubes_min_height : float = -20.0
 
 onready var background_root = $BackgroundRoot
 onready var ground_root = $Ground
-onready var text_label = $CanvasLayer/CountText
+onready var text_label = $Interface/CountText
 
 var tubes_distance : float = 80
 var previous_bottom_height: float = 70
@@ -19,6 +21,7 @@ var start_position : float = 0
 var tube_deafult_position: float = 280
 var tubes_air_space = 80
 var flied_distance : float = 0
+
 
 var _tubes_count = 0
 var is_game_over = false
@@ -68,6 +71,10 @@ func _create_tube(position, prev_bottom):
 	var new_tube = tubes_scene.instance()
 	add_child(new_tube)
 	var bottom_height = prev_bottom + randi()%30 - 15
+	
+	bottom_height = min(tubes_max_height, bottom_height)
+	bottom_height = max(tubes_min_height, bottom_height)
+	
 	previous_bottom_height = bottom_height
 	new_tube.init(position, tubes_air_space, bottom_height)
 	
@@ -80,11 +87,12 @@ func _create_tube(position, prev_bottom):
 
 func on_bird_collision():
 	is_game_over = true
+	get_tree().reload_current_scene()
 	
 
 func on_tube_counted():
 	_tubes_count += 1
-	text_label.text = _tubes_count as String
+#	text_label.text = _tubes_count  as String
 	
 	if _tubes_count%10 == 0:
 		tubes_air_space -= 10
