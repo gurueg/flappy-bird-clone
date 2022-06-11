@@ -2,7 +2,6 @@ extends Node2D
 
 signal s_bird_hit
 
-
 var flap_power : float = 180
 var gravity : float = 640
 var default_y_speed : float = 160
