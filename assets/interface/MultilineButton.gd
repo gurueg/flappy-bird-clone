@@ -11,6 +11,9 @@ var format_string : String = "[center]%s[/center]"
 
 
 func _process(delta):
+	if button_text == "":
+		return
+		
 	text_object.bbcode_text = format_string % [button_text.c_unescape()] 
 	
 	if button_min_width:

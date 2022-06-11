@@ -7,9 +7,13 @@ var flap_power : float = 180
 var gravity : float = 640
 var default_y_speed : float = 160
 var y_speed : float = 80
+var is_bird_active = false
 
 
 func _process(delta):
+	if !is_bird_active:
+		return
+	
 	y_speed += gravity * delta
 	y_speed = min(y_speed, default_y_speed)
 	
@@ -28,3 +32,7 @@ func _process(delta):
 func on_bird_hit(area:Area2D):
 	print(area.collision_layer)
 	emit_signal("s_bird_hit")
+
+
+func set_bird_active(active: bool):
+	is_bird_active = active

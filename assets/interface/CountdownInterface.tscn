@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/great_wibes_30.theme" type="Theme" id=1]
+[ext_resource path="res://assets/interface/CountdownInterface.gd" type="Script" id=2]
+[ext_resource path="res://assets/interface/white_block.png" type="Texture" id=3]
+
+[node name="CountdownInterface" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="SecondTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="BlackOverlay" type="Sprite" parent="."]
+modulate = Color( 0, 0, 0, 0.439216 )
+position = Vector2( 90.5, 135.5 )
+scale = Vector2( 3.10938, 4.42188 )
+texture = ExtResource( 3 )
+
+[node name="CountdownTimer" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -14.5
+margin_right = 20.0
+margin_bottom = 14.5
+theme = ExtResource( 1 )
+text = "3"
+align = 1
+valign = 1
+
+[connection signal="timeout" from="SecondTimer" to="." method="on_timer_out"]

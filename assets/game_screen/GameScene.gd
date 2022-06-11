@@ -11,7 +11,10 @@ const tubes_min_height : float = -20.0
 
 onready var background_root = $BackgroundRoot
 onready var ground_root = $Ground
-onready var text_label = $Interface/CountText
+onready var int_points = $InterfaceCanvas/PointsInterface
+onready var int_countdown = $InterfaceCanvas/CountdownInterface
+onready var int_menu = $InterfaceCanvas/LoseInterface
+onready var bird = $Bird
 
 var tubes_distance : float = 80
 var previous_bottom_height: float = 70
@@ -25,7 +28,7 @@ var flied_distance : float = 0
 
 var _tubes_count = 0
 var is_game_over = false
-
+var is_game_started = false
 
 
 func _ready():
@@ -33,11 +36,13 @@ func _ready():
 	_create_tube(200, previous_bottom_height)
 	_create_tube(280, previous_bottom_height)
 	randomize()
+	
+	int_countdown.start_countdown(3)
 
 
 
 func _process(delta):
-	if is_game_over: 
+	if is_game_over || !is_game_started: 
 		return
 	
 	var delta_distance = bird_speed * delta
@@ -87,14 +92,30 @@ func _create_tube(position, prev_bottom):
 
 func on_bird_collision():
 	is_game_over = true
-	get_tree().reload_current_scene()
+	int_menu.visible  = true
+	bird.set_bird_active(false)
 	
+
 
 func on_tube_counted():
 	_tubes_count += 1
-#	text_label.text = _tubes_count  as String
+	int_points.set_points_count(_tubes_count  as String)
 	
 	if _tubes_count%10 == 0:
 		tubes_air_space -= 10
 		tubes_air_space = max(tubes_air_space_min, tubes_air_space)
 
+
+func on_countdown_ended():
+	is_game_started = true
+	bird.set_bird_active(true)
+	int_countdown.visible = false
+	int_points.visible = true
+	
+
+func on_button_close_pressed():
+	get_tree().quit()
+
+
+func on_button_restart_pressed():
+	get_tree().reload_current_scene()
