@@ -18,6 +18,7 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("screen_tap"):
 		y_speed = -flap_power
+		MusicPlayer.play_sound("swoosh")
 		
 	global_position.y += y_speed * delta
 	
@@ -30,6 +31,7 @@ func _process(delta):
 
 func on_bird_hit(area:Area2D):
 	print(area.collision_layer)
+	MusicPlayer.play_sound("hit")
 	emit_signal("s_bird_hit")
 
 

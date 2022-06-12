@@ -112,3 +112,4 @@ func _create_tube(position, prev_bottom):
 	new_tube.connect("tubes_counted", self, "on_tube_counted")
 	
 	tubes_list.append(new_tube)
+

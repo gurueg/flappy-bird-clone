@@ -67,6 +67,7 @@ func _set_countdown_state():
 
 
 func _set_game_state():
+	points_text.text = "0"
 	overlay.visible = false
 	countdown_text.visible = false
 	buttons.visible = false
