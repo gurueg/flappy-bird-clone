@@ -3,19 +3,19 @@ extends Node2D
 signal on_game_end
 
 const background_size : float = 384.0
-const tubes_air_space_min = 30
+const tubes_air_space_min = 80
 const bird_speed : float = 80.0
 const tubes_max_height : float = 90.0
 const tubes_min_height : float = -20.0
 const tubes_scene = preload("../tubes/Tubes.tscn")
 
 var tubes_distance : float = 80
-var previous_bottom_height: float = 70
+var previous_bottom_height: float = 90
 var tubes_list : Array = []
 
 var start_position : float = 0
-var tube_deafult_position: float = 280
-var tubes_air_space : float = 80.0
+var tube_deafult_position: float = 210
+var tubes_air_space : float = 100.0
 var flied_distance : float = 0
 
 var _tubes_count: int = 0
@@ -25,18 +25,18 @@ var is_game_started: bool = false
 onready var background_root = $BackgroundRoot
 onready var ground_root = $Ground
 onready var int_points = $InterfaceCanvas/PointsInterface
-onready var int_countdown = $InterfaceCanvas/CountdownInterface
-onready var int_menu = $InterfaceCanvas/LoseInterface
+onready var interface = $InterfaceCanvas/Interface
 onready var bird = $Bird
 
 
 func _ready():
-	_create_tube(120, previous_bottom_height)
-	_create_tube(200, previous_bottom_height)
-	_create_tube(280, previous_bottom_height)
+	_create_tube(50, previous_bottom_height)
+	_create_tube(130, previous_bottom_height)
+	_create_tube(210, previous_bottom_height)
 	randomize()
 	
-	int_countdown.start_countdown(3)
+	interface.set_interface_state(interface.InterfaceStates.COUNTDOWN)
+	interface.start_countdown(3)
 
 
 func _process(delta):
@@ -55,13 +55,13 @@ func _process(delta):
 
 func on_bird_collision():
 	is_game_over = true
-	int_menu.visible  = true
+	interface.set_interface_state(interface.InterfaceStates.LOSE)
 	bird.set_bird_active(false)
 
 
 func on_tube_counted():
 	_tubes_count += 1
-	int_points.set_points_count(_tubes_count  as String)
+	interface.set_points_count(_tubes_count  as String)
 	
 	if _tubes_count%10 == 0:
 		tubes_air_space -= 10
@@ -71,9 +71,7 @@ func on_tube_counted():
 func on_countdown_ended():
 	is_game_started = true
 	bird.set_bird_active(true)
-	int_countdown.visible = false
-	int_points.visible = true
-	
+	interface.set_interface_state(interface.InterfaceStates.POINTS)
 
 
 func on_button_close_pressed():

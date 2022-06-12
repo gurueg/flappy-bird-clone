@@ -1,12 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/player/Bird.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/game_screen/Background.png" type="Texture" id=2]
 [ext_resource path="res://assets/game_screen/GameScene.gd" type="Script" id=3]
 [ext_resource path="res://assets/interface/Interface.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/game_screen/grount_tileset.tres" type="TileSet" id=5]
-[ext_resource path="res://assets/interface/PointsInterface.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/interface/CountdownInterface.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 92.5, 23.5 )
@@ -65,19 +63,11 @@ current = true
 [node name="InterfaceCanvas" type="CanvasLayer" parent="."]
 layer = 2
 
-[node name="PointsInterface" parent="InterfaceCanvas" instance=ExtResource( 6 )]
-visible = false
-mouse_filter = 2
-
-[node name="CountdownInterface" parent="InterfaceCanvas" instance=ExtResource( 7 )]
-mouse_filter = 2
-
-[node name="LoseInterface" parent="InterfaceCanvas" instance=ExtResource( 4 )]
-visible = false
+[node name="Interface" parent="InterfaceCanvas" instance=ExtResource( 4 )]
 
 [connection signal="on_game_end" from="." to="BackgroundRoot" method="_on_game_end"]
 [connection signal="s_bird_hit" from="Bird" to="." method="on_bird_collision"]
 [connection signal="area_entered" from="Area2D" to="." method="on_bird_collision"]
-[connection signal="countdown_ended" from="InterfaceCanvas/CountdownInterface" to="." method="on_countdown_ended"]
-[connection signal="close_pressed" from="InterfaceCanvas/LoseInterface" to="." method="on_button_close_pressed"]
-[connection signal="restart_pressed" from="InterfaceCanvas/LoseInterface" to="." method="on_button_restart_pressed"]
+[connection signal="close_pressed" from="InterfaceCanvas/Interface" to="." method="on_button_close_pressed"]
+[connection signal="countdown_ended" from="InterfaceCanvas/Interface" to="." method="on_countdown_ended"]
+[connection signal="restart_pressed" from="InterfaceCanvas/Interface" to="." method="on_button_restart_pressed"]
