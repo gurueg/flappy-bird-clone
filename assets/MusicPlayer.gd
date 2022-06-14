@@ -8,7 +8,8 @@ var audioFiles = {}
 func _ready():
 	audioFiles.die = preload("res://assets/audio/die.ogg")
 	audioFiles.hit = preload("res://assets/audio/hit.ogg")
-	audioFiles.swoosh = preload("res://assets/audio/swoosh.ogg")
+	audioFiles.wing = preload("res://assets/audio/wing.ogg")
+	audioFiles.point = preload("res://assets/audio/point.ogg")
 
 
 func play_sound(sound_name: String):

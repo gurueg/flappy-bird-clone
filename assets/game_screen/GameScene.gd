@@ -3,7 +3,7 @@ extends Node2D
 signal on_game_end
 
 const background_size : float = 384.0
-const tubes_air_space_min = 80
+const tubes_air_space_min = 50
 const bird_speed : float = 80.0
 const tubes_max_height : float = 90.0
 const tubes_min_height : float = -20.0
@@ -15,7 +15,7 @@ var tubes_list : Array = []
 
 var start_position : float = 0
 var tube_deafult_position: float = 210
-var tubes_air_space : float = 100.0
+var tubes_air_space : float = 90.0
 var flied_distance : float = 0
 
 var _tubes_count: int = 0
@@ -62,6 +62,7 @@ func on_bird_collision():
 func on_tube_counted():
 	_tubes_count += 1
 	interface.set_points_count(_tubes_count  as String)
+	MusicPlayer.play_sound("point")
 	
 	if _tubes_count%10 == 0:
 		tubes_air_space -= 10
@@ -100,7 +101,7 @@ func _move_environment(distance: float):
 func _create_tube(position, prev_bottom):
 	var new_tube = tubes_scene.instance()
 	add_child(new_tube)
-	var bottom_height = prev_bottom + randi()%30 - 15
+	var bottom_height = prev_bottom + randi()%50 - 25
 	
 	bottom_height = min(tubes_max_height, bottom_height)
 	bottom_height = max(tubes_min_height, bottom_height)

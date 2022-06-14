@@ -18,7 +18,7 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("screen_tap"):
 		y_speed = -flap_power
-		MusicPlayer.play_sound("swoosh")
+		MusicPlayer.play_sound("wing")
 		
 	global_position.y += y_speed * delta
 	
