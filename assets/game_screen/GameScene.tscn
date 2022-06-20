@@ -68,6 +68,7 @@ layer = 2
 [connection signal="on_game_end" from="." to="BackgroundRoot" method="_on_game_end"]
 [connection signal="s_bird_hit" from="Bird" to="." method="on_bird_collision"]
 [connection signal="area_entered" from="Area2D" to="." method="on_bird_collision"]
-[connection signal="close_pressed" from="InterfaceCanvas/Interface" to="." method="on_button_close_pressed"]
 [connection signal="countdown_ended" from="InterfaceCanvas/Interface" to="." method="on_countdown_ended"]
+[connection signal="menu_pressed" from="InterfaceCanvas/Interface" to="." method="_on_button_menu_pressed"]
+[connection signal="pause_pressed" from="InterfaceCanvas/Interface" to="." method="_on_pause_pressed"]
 [connection signal="restart_pressed" from="InterfaceCanvas/Interface" to="." method="on_button_restart_pressed"]

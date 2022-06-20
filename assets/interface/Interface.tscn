@@ -1,10 +1,29 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/interface/white_block.png" type="Texture" id=1]
 [ext_resource path="res://assets/interface/Interface.gd" type="Script" id=2]
 [ext_resource path="res://assets/interface/MultilineButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/fonts/great_wibes_30.theme" type="Theme" id=4]
 [ext_resource path="res://assets/fonts/great_wibes.theme" type="Theme" id=5]
+[ext_resource path="res://assets/interface/PauseButton.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 6 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
 
 [node name="Interface" type="Control"]
 anchor_right = 1.0
@@ -12,22 +31,28 @@ anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource( 2 )
 
-[node name="BlackOverlay" type="TextureRect" parent="."]
+[node name="CountDownInterface" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="CountdownOverlay" type="TextureRect" parent="CountDownInterface"]
 modulate = Color( 0, 0, 0, 0.321569 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="SecondTimer" type="Timer" parent="."]
+[node name="SecondTimer" type="Timer" parent="CountDownInterface"]
 one_shot = true
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="CountDownInterface"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="CountdownTimer" type="Label" parent="CenterContainer"]
+[node name="CountdownTimer" type="Label" parent="CountDownInterface/CenterContainer"]
 margin_left = 84.0
 margin_top = 120.0
 margin_right = 96.0
@@ -37,19 +62,52 @@ text = "3"
 align = 1
 valign = 1
 
-[node name="VerticalContainer" type="VBoxContainer" parent="."]
+[node name="PointsInterface" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="CountText" type="Label" parent="VerticalContainer"]
+[node name="VerticalContainer" type="VBoxContainer" parent="PointsInterface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PointsInterface/VerticalContainer"]
 margin_right = 180.0
-margin_bottom = 18.0
+margin_bottom = 32.0
+
+[node name="TextureButton" type="TextureButton" parent="PointsInterface/VerticalContainer/MarginContainer"]
+margin_right = 180.0
+margin_bottom = 32.0
+focus_mode = 0
+action_mode = 0
+enabled_focus_mode = 0
+texture_normal = SubResource( 5 )
+texture_pressed = SubResource( 6 )
+stretch_mode = 4
+
+[node name="CountText" type="Label" parent="PointsInterface/VerticalContainer"]
+margin_top = 36.0
+margin_right = 180.0
+margin_bottom = 54.0
 theme = ExtResource( 5 )
 text = "0"
 align = 1
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="."]
+[node name="LoseInterface" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="LoseOverlay" type="TextureRect" parent="LoseInterface"]
+modulate = Color( 0, 0, 0, 0.321569 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="LoseInterface"]
 margin_left = 10.0
 margin_top = 116.0
 margin_right = 170.0
@@ -58,7 +116,7 @@ mouse_filter = 2
 custom_constants/separation = 20
 alignment = 1
 
-[node name="ButtonRestart" parent="ButtonsContainer" instance=ExtResource( 3 )]
+[node name="ButtonRestart" parent="LoseInterface/ButtonsContainer" instance=ExtResource( 3 )]
 margin_right = 70.0
 margin_bottom = 38.0
 rect_min_size = Vector2( 70, 38 )
@@ -69,7 +127,7 @@ enabled_focus_mode = 0
 button_text = "RESTART\\nLEVEL"
 button_min_width = 70.0
 
-[node name="ButtonClose" parent="ButtonsContainer" instance=ExtResource( 3 )]
+[node name="ButtonClose" parent="LoseInterface/ButtonsContainer" instance=ExtResource( 3 )]
 margin_left = 90.0
 margin_right = 160.0
 margin_bottom = 38.0
@@ -78,9 +136,74 @@ focus_mode = 0
 shortcut_in_tooltip = false
 action_mode = 0
 enabled_focus_mode = 0
-button_text = "CLOSE\\nGAME"
+button_text = "BACK TO\\nMENU"
 button_min_width = 70.0
 
-[connection signal="timeout" from="SecondTimer" to="." method="on_timer_out"]
-[connection signal="button_down" from="ButtonsContainer/ButtonRestart" to="." method="on_restart_pressed"]
-[connection signal="button_down" from="ButtonsContainer/ButtonClose" to="." method="on_close_pressed"]
+[node name="PauseInterface" type="Control" parent="."]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="PauseOverlay" type="TextureRect" parent="PauseInterface"]
+modulate = Color( 0, 0, 0, 0.321569 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseInterface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 11
+alignment = 1
+
+[node name="MusicContainer" type="CenterContainer" parent="PauseInterface/VBoxContainer"]
+margin_top = 89.0
+margin_right = 180.0
+margin_bottom = 115.0
+
+[node name="MusicSetting" type="CheckBox" parent="PauseInterface/VBoxContainer/MusicContainer"]
+margin_left = 57.0
+margin_right = 123.0
+margin_bottom = 26.0
+focus_mode = 0
+theme = ExtResource( 5 )
+enabled_focus_mode = 0
+text = "Music"
+align = 1
+
+[node name="SoundContainer" type="CenterContainer" parent="PauseInterface/VBoxContainer"]
+margin_top = 126.0
+margin_right = 180.0
+margin_bottom = 152.0
+
+[node name="SoundSetting" type="CheckBox" parent="PauseInterface/VBoxContainer/SoundContainer"]
+margin_left = 53.0
+margin_right = 127.0
+margin_bottom = 26.0
+focus_mode = 0
+theme = ExtResource( 5 )
+enabled_focus_mode = 0
+text = "Sounds"
+align = 1
+
+[node name="ContinueButton" type="Button" parent="PauseInterface/VBoxContainer"]
+margin_top = 163.0
+margin_right = 180.0
+margin_bottom = 181.0
+theme = ExtResource( 5 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Continue"
+
+[connection signal="timeout" from="CountDownInterface/SecondTimer" to="." method="on_timer_out"]
+[connection signal="pressed" from="PointsInterface/VerticalContainer/MarginContainer/TextureButton" to="." method="_on_pause_pressed"]
+[connection signal="button_down" from="LoseInterface/ButtonsContainer/ButtonRestart" to="." method="on_restart_pressed"]
+[connection signal="button_down" from="LoseInterface/ButtonsContainer/ButtonClose" to="." method="on_close_pressed"]
+[connection signal="toggled" from="PauseInterface/VBoxContainer/MusicContainer/MusicSetting" to="." method="_on_music_toggled"]
+[connection signal="toggled" from="PauseInterface/VBoxContainer/SoundContainer/SoundSetting" to="." method="_on_sound_toggled"]
+[connection signal="pressed" from="PauseInterface/VBoxContainer/ContinueButton" to="." method="_on_continue_pressed"]

@@ -1,0 +1,174 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/game_screen/Background.png" type="Texture" id=1]
+[ext_resource path="res://assets/interface/Plate.png" type="Texture" id=2]
+[ext_resource path="res://assets/main_menu/MainMenu.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/great_wibes.theme" type="Theme" id=4]
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 90, 135 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "to_settings"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 0.707107, 0.148651 ),
+"update": 0,
+"values": [ Vector2( 90, 135 ), Vector2( 270, 135 ) ]
+}
+
+[sub_resource type="StreamTexture" id=3]
+flags = 4
+load_path = "res://.import/ButtonPlay.png-3a6c8844ea2be7257ab15badff6c20a7.stex"
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = SubResource( 3 )
+region = Rect2( 0, 0, 64, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = SubResource( 3 )
+region = Rect2( 64, 0, 64, 32 )
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="BackGround" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 1 )
+stretch_mode = 1
+
+[node name="BackGround2" type="TextureRect" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 76.0
+margin_right = 332.0
+texture = ExtResource( 1 )
+stretch_mode = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 90, 135 )
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+anims/RESET = SubResource( 4 )
+anims/to_settings = SubResource( 5 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+margin_right = 180.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 180, 270 )
+alignment = 1
+
+[node name="PlayContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 67.0
+margin_right = 180.0
+margin_bottom = 99.0
+
+[node name="ButtonPlay" type="TextureButton" parent="HBoxContainer/VBoxContainer/PlayContainer"]
+margin_left = 58.0
+margin_right = 122.0
+margin_bottom = 32.0
+texture_normal = SubResource( 1 )
+texture_pressed = SubResource( 2 )
+stretch_mode = 6
+
+[node name="SettingsContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 103.0
+margin_right = 180.0
+margin_bottom = 135.0
+
+[node name="ButtonSettings" type="TextureButton" parent="HBoxContainer/VBoxContainer/SettingsContainer"]
+margin_left = 58.0
+margin_right = 122.0
+margin_bottom = 32.0
+texture_normal = SubResource( 1 )
+texture_pressed = SubResource( 2 )
+stretch_mode = 6
+
+[node name="ScoresBox" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
+margin_top = 139.0
+margin_right = 180.0
+margin_bottom = 203.0
+
+[node name="ScoresPlate" type="TextureRect" parent="HBoxContainer/VBoxContainer/ScoresBox"]
+margin_left = 26.0
+margin_right = 154.0
+margin_bottom = 64.0
+texture = ExtResource( 2 )
+stretch_mode = 1
+
+[node name="ScoresText" type="Label" parent="HBoxContainer/VBoxContainer/ScoresBox"]
+margin_left = 21.0
+margin_top = 23.0
+margin_right = 159.0
+margin_bottom = 41.0
+theme = ExtResource( 4 )
+text = "Your Best Scroes: 120"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer"]
+margin_left = 184.0
+margin_right = 364.0
+margin_bottom = 270.0
+rect_min_size = Vector2( 180, 270 )
+alignment = 1
+
+[node name="PlayContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 101.0
+margin_right = 180.0
+margin_bottom = 133.0
+
+[node name="ButtonPlay" type="TextureButton" parent="HBoxContainer/VBoxContainer2/PlayContainer"]
+margin_left = 58.0
+margin_right = 122.0
+margin_bottom = 32.0
+texture_normal = SubResource( 1 )
+texture_pressed = SubResource( 2 )
+stretch_mode = 6
+
+[node name="SettingsContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 137.0
+margin_right = 180.0
+margin_bottom = 169.0
+
+[node name="ButtonSettings" type="TextureButton" parent="HBoxContainer/VBoxContainer2/SettingsContainer"]
+margin_left = 58.0
+margin_right = 122.0
+margin_bottom = 32.0
+texture_normal = SubResource( 1 )
+texture_pressed = SubResource( 2 )
+stretch_mode = 6
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayContainer/ButtonPlay" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/SettingsContainer/ButtonSettings" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/PlayContainer/ButtonPlay" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/SettingsContainer/ButtonSettings" to="." method="_on_play_pressed"]

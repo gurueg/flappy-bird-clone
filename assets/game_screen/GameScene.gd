@@ -3,13 +3,13 @@ extends Node2D
 signal on_game_end
 
 const background_size : float = 384.0
-const tubes_air_space_min = 50
+const tubes_air_space_min = 60
 const bird_speed : float = 80.0
 const tubes_max_height : float = 90.0
 const tubes_min_height : float = -20.0
 const tubes_scene = preload("../tubes/Tubes.tscn")
 
-var tubes_distance : float = 80
+var tubes_distance : float = 90
 var previous_bottom_height: float = 90
 var tubes_list : Array = []
 
@@ -24,7 +24,6 @@ var is_game_started: bool = false
 
 onready var background_root = $BackgroundRoot
 onready var ground_root = $Ground
-onready var int_points = $InterfaceCanvas/PointsInterface
 onready var interface = $InterfaceCanvas/Interface
 onready var bird = $Bird
 
@@ -75,10 +74,6 @@ func on_countdown_ended():
 	interface.set_interface_state(interface.InterfaceStates.POINTS)
 
 
-func on_button_close_pressed():
-	get_tree().quit()
-
-
 func on_button_restart_pressed():
 	get_tree().reload_current_scene()
 
@@ -114,3 +109,15 @@ func _create_tube(position, prev_bottom):
 	
 	tubes_list.append(new_tube)
 
+
+
+func _on_pause_pressed(is_paused: bool):
+	if is_paused:
+		interface.set_interface_state(interface.InterfaceStates.PAUSE)
+	else:
+		interface.set_interface_state(interface.InterfaceStates.POINTS)
+
+
+func _on_button_menu_pressed():
+	get_tree().change_scene("res://assets/main_menu/MainMenu.tscn")
+	queue_free()

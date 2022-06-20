@@ -1,21 +1,26 @@
 extends Control
 
-enum InterfaceStates {COUNTDOWN = 0, POINTS = 1, LOSE = 2}
+enum InterfaceStates {COUNTDOWN = 0, POINTS = 1, LOSE = 2, PAUSE = 3}
 
 export var countdown_time: int = 3
 
-onready var overlay = $BlackOverlay
-onready var countdown_text: Label = $CenterContainer/CountdownTimer
-onready var timer_object: Timer = $SecondTimer
-onready var buttons = $ButtonsContainer
-onready var points_text = $VerticalContainer/CountText
+onready var countdown_text: Label = $CountDownInterface/CenterContainer/CountdownTimer
+onready var timer_object: Timer = $CountDownInterface/SecondTimer
+onready var buttons = $LoseInterface
+onready var int_point = $PointsInterface
+onready var int_countdown = $CountDownInterface
+onready var points_text = $PointsInterface/VerticalContainer/CountText
+
+onready var int_pause = $PauseInterface
+onready var music_check = $PauseInterface/VBoxContainer/MusicContainer/MusicSetting
+onready var sound_check = $PauseInterface/VBoxContainer/SoundContainer/SoundSetting
 
 var remaining_time: int = 0
 
 signal restart_pressed
-signal close_pressed
+signal menu_pressed
 signal countdown_ended
-
+signal pause_pressed
 
 func _ready():
 	points_text.text = "0"
@@ -35,6 +40,8 @@ func set_interface_state(new_state: int):
 			_set_game_state()
 		InterfaceStates.LOSE:
 			_set_lose_state()
+		InterfaceStates.PAUSE:
+			_set_pause_state()
 
 
 func set_points_count(new_value: String):
@@ -56,26 +63,54 @@ func on_restart_pressed():
 
 
 func on_close_pressed():
-	emit_signal("close_pressed")
+	emit_signal("menu_pressed")
 
+
+func _hide_all_interfaces():
+	int_countdown.visible = false
+	int_point.visible = false
+	buttons.visible = false
+	int_pause.visible = false
 
 func _set_countdown_state():
-	overlay.visible = true
-	countdown_text.visible = true
-	buttons.visible = false
-	points_text.visible = false
+	_hide_all_interfaces()
+	int_countdown.visible = true
 
 
 func _set_game_state():
+	_hide_all_interfaces()
 	points_text.text = "0"
-	overlay.visible = false
-	countdown_text.visible = false
-	buttons.visible = false
-	points_text.visible = true
+	int_point.visible = true
 
 
 func _set_lose_state():
-	overlay.visible = true
-	countdown_text.visible = false
+	_hide_all_interfaces()
 	buttons.visible = true
-	points_text.visible = false
+	
+func _set_pause_state():
+	_hide_all_interfaces()
+	int_pause.visible = true
+	music_check.pressed = Setting.get_setting("audio", "music")
+	sound_check.pressed = Setting.get_setting("audio", "sounds")
+
+func _on_music_toggled(button_pressed):
+	Setting.set_setting("audio", "music", button_pressed)
+	Setting.save_settings()
+	MusicPlayer.update_volumes()
+
+
+func _on_sound_toggled(button_pressed):
+	Setting.set_setting("audio", "sounds", button_pressed)
+	Setting.save_settings()
+	MusicPlayer.update_volumes()
+
+
+func _on_pause_pressed():
+	get_tree().paused = true
+	emit_signal("pause_pressed", true)
+	
+
+
+func _on_continue_pressed():
+	get_tree().paused = false
+	emit_signal("pause_pressed", false)
