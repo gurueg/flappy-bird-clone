@@ -1,9 +1,15 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/game_screen/Background.png" type="Texture" id=1]
 [ext_resource path="res://assets/interface/Plate.png" type="Texture" id=2]
 [ext_resource path="res://assets/main_menu/MainMenu.gd" type="Script" id=3]
 [ext_resource path="res://assets/fonts/great_wibes.theme" type="Theme" id=4]
+[ext_resource path="res://assets/interface/BlueCheckBox.png" type="Texture" id=5]
+[ext_resource path="res://assets/interface/ButtonGreenlPressed.png" type="Texture" id=6]
+[ext_resource path="res://assets/interface/ButtonGreenNormal.png" type="Texture" id=7]
+[ext_resource path="res://assets/interface/BlueCheckBoxChecked.png" type="Texture" id=10]
+[ext_resource path="res://assets/interface/ButtonRedPressed.png" type="Texture" id=11]
+[ext_resource path="res://assets/interface/ButtonRedNormal.png" type="Texture" id=12]
 
 [sub_resource type="Animation" id=4]
 length = 0.001
@@ -35,20 +41,6 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 90, 135 ), Vector2( 270, 135 ) ]
 }
-
-[sub_resource type="StreamTexture" id=3]
-flags = 4
-load_path = "res://.import/ButtonPlay.png-3a6c8844ea2be7257ab15badff6c20a7.stex"
-
-[sub_resource type="AtlasTexture" id=1]
-flags = 4
-atlas = SubResource( 3 )
-region = Rect2( 0, 0, 64, 32 )
-
-[sub_resource type="AtlasTexture" id=2]
-flags = 4
-atlas = SubResource( 3 )
-region = Rect2( 64, 0, 64, 32 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -93,14 +85,25 @@ alignment = 1
 margin_top = 67.0
 margin_right = 180.0
 margin_bottom = 99.0
+rect_min_size = Vector2( 80, 32 )
 
 [node name="ButtonPlay" type="TextureButton" parent="HBoxContainer/VBoxContainer/PlayContainer"]
-margin_left = 58.0
-margin_right = 122.0
+margin_left = 50.0
+margin_right = 130.0
 margin_bottom = 32.0
-texture_normal = SubResource( 1 )
-texture_pressed = SubResource( 2 )
+rect_min_size = Vector2( 80, 32 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 6 )
+expand = true
 stretch_mode = 6
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/PlayContainer"]
+margin_left = 76.0
+margin_top = 5.0
+margin_right = 104.0
+margin_bottom = 25.0
+theme = ExtResource( 4 )
+text = "Play"
 
 [node name="SettingsContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 103.0
@@ -108,12 +111,22 @@ margin_right = 180.0
 margin_bottom = 135.0
 
 [node name="ButtonSettings" type="TextureButton" parent="HBoxContainer/VBoxContainer/SettingsContainer"]
-margin_left = 58.0
-margin_right = 122.0
+margin_left = 50.0
+margin_right = 130.0
 margin_bottom = 32.0
-texture_normal = SubResource( 1 )
-texture_pressed = SubResource( 2 )
+rect_min_size = Vector2( 80, 32 )
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 11 )
+expand = true
 stretch_mode = 6
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/SettingsContainer"]
+margin_left = 61.0
+margin_top = 4.0
+margin_right = 119.0
+margin_bottom = 25.0
+theme = ExtResource( 4 )
+text = "Settings"
 
 [node name="ScoresBox" type="CenterContainer" parent="HBoxContainer/VBoxContainer"]
 margin_top = 139.0
@@ -121,9 +134,9 @@ margin_right = 180.0
 margin_bottom = 203.0
 
 [node name="ScoresPlate" type="TextureRect" parent="HBoxContainer/VBoxContainer/ScoresBox"]
-margin_left = 26.0
-margin_right = 154.0
+margin_right = 180.0
 margin_bottom = 64.0
+rect_min_size = Vector2( 180, 64 )
 texture = ExtResource( 2 )
 stretch_mode = 1
 
@@ -142,33 +155,85 @@ margin_bottom = 270.0
 rect_min_size = Vector2( 180, 270 )
 alignment = 1
 
-[node name="PlayContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
-margin_top = 101.0
+[node name="MusicContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 83.0
 margin_right = 180.0
-margin_bottom = 133.0
+margin_bottom = 115.0
 
-[node name="ButtonPlay" type="TextureButton" parent="HBoxContainer/VBoxContainer2/PlayContainer"]
-margin_left = 58.0
-margin_right = 122.0
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2/MusicContainer"]
+margin_left = 53.0
+margin_right = 127.0
 margin_bottom = 32.0
-texture_normal = SubResource( 1 )
-texture_pressed = SubResource( 2 )
+alignment = 1
+
+[node name="MusicCheck" type="TextureButton" parent="HBoxContainer/VBoxContainer2/MusicContainer/HBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+toggle_mode = true
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/MusicContainer/HBoxContainer"]
+margin_left = 36.0
+margin_top = 7.0
+margin_right = 74.0
+margin_bottom = 25.0
+theme = ExtResource( 4 )
+text = "Music"
+
+[node name="SoundsContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 119.0
+margin_right = 180.0
+margin_bottom = 151.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer2/SoundsContainer"]
+margin_left = 49.0
+margin_right = 131.0
+margin_bottom = 32.0
+alignment = 1
+
+[node name="SoundsCheck" type="TextureButton" parent="HBoxContainer/VBoxContainer2/SoundsContainer/HBoxContainer"]
+margin_right = 32.0
+margin_bottom = 32.0
+toggle_mode = true
+texture_normal = ExtResource( 5 )
+texture_pressed = ExtResource( 10 )
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/SoundsContainer/HBoxContainer"]
+margin_left = 36.0
+margin_top = 7.0
+margin_right = 82.0
+margin_bottom = 25.0
+theme = ExtResource( 4 )
+text = "Sounds"
+
+[node name="BackContainer2" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
+margin_top = 155.0
+margin_right = 180.0
+margin_bottom = 187.0
+
+[node name="BackButton" type="TextureButton" parent="HBoxContainer/VBoxContainer2/BackContainer2"]
+margin_left = 50.0
+margin_right = 130.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 80, 32 )
+texture_normal = ExtResource( 12 )
+texture_pressed = ExtResource( 11 )
+expand = true
 stretch_mode = 6
 
-[node name="SettingsContainer" type="CenterContainer" parent="HBoxContainer/VBoxContainer2"]
-margin_top = 137.0
-margin_right = 180.0
-margin_bottom = 169.0
-
-[node name="ButtonSettings" type="TextureButton" parent="HBoxContainer/VBoxContainer2/SettingsContainer"]
-margin_left = 58.0
-margin_right = 122.0
-margin_bottom = 32.0
-texture_normal = SubResource( 1 )
-texture_pressed = SubResource( 2 )
-stretch_mode = 6
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer2/BackContainer2"]
+margin_left = 73.0
+margin_top = 2.0
+margin_right = 107.0
+margin_bottom = 25.0
+theme = ExtResource( 4 )
+text = "Back "
+align = 1
+valign = 1
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayContainer/ButtonPlay" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/SettingsContainer/ButtonSettings" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/PlayContainer/ButtonPlay" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer2/SettingsContainer/ButtonSettings" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/SettingsContainer/ButtonSettings" to="." method="_on_settings_pressed"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer2/MusicContainer/HBoxContainer/MusicCheck" to="." method="_on_music_toggled"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer2/SoundsContainer/HBoxContainer/SoundsCheck" to="." method="_on_sounds_toggled"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer2/BackContainer2/BackButton" to="." method="_on_back_pressed"]

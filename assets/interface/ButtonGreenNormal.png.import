@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ButtonGreen.png-e2fa7d82ace45166d8e787469874377a.stex"
+path="res://.import/ButtonGreenNormal.png-7bc2972f60070c71e8b3fabadf9b446b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/interface/ButtonGreen.png"
-dest_files=[ "res://.import/ButtonGreen.png-e2fa7d82ace45166d8e787469874377a.stex" ]
+source_file="res://assets/interface/ButtonGreenNormal.png"
+dest_files=[ "res://.import/ButtonGreenNormal.png-7bc2972f60070c71e8b3fabadf9b446b.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=0
+flags/repeat=2
 flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false

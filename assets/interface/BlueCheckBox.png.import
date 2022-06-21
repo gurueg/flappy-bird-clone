@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ButtonPlay.png-3a6c8844ea2be7257ab15badff6c20a7.stex"
+path="res://.import/BlueCheckBox.png-4a7a3f2406a8ccf9f87a422cfef1ec76.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/interface/ButtonPlay.png"
-dest_files=[ "res://.import/ButtonPlay.png-3a6c8844ea2be7257ab15badff6c20a7.stex" ]
+source_file="res://assets/interface/BlueCheckBox.png"
+dest_files=[ "res://.import/BlueCheckBox.png-4a7a3f2406a8ccf9f87a422cfef1ec76.stex" ]
 
 [params]
 
