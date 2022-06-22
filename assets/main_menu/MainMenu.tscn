@@ -62,14 +62,6 @@ margin_right = 332.0
 texture = ExtResource( 1 )
 stretch_mode = 1
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 90, 135 )
-current = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
-anims/RESET = SubResource( 4 )
-anims/to_settings = SubResource( 5 )
-
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
@@ -231,6 +223,14 @@ theme = ExtResource( 4 )
 text = "Back "
 align = 1
 valign = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 90, 135 )
+current = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera2D"]
+anims/RESET = SubResource( 4 )
+anims/to_settings = SubResource( 5 )
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/PlayContainer/ButtonPlay" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/SettingsContainer/ButtonSettings" to="." method="_on_settings_pressed"]
