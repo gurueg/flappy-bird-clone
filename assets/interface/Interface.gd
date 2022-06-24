@@ -2,6 +2,9 @@ extends Control
 
 enum InterfaceStates {COUNTDOWN = 0, POINTS = 1, LOSE = 2, PAUSE = 3}
 
+const best_scores_pattern = "Your best scores: %s"
+const last_scores_pattern = "Your scores: %s"
+
 export var countdown_time: int = 3
 
 onready var countdown_text: Label = $CountDownInterface/CenterContainer/CountdownTimer
@@ -15,7 +18,11 @@ onready var int_pause = $PauseInterface
 onready var music_check = $PauseInterface/VBoxContainer/MusicContainer/MusicSetting
 onready var sound_check = $PauseInterface/VBoxContainer/SoundContainer/SoundSetting
 
+onready var lose_scores = $LoseInterface/VBoxContainer/CenterContainer/PointsContainer/ScoresLabel
+onready var lose_best_scores = $LoseInterface/VBoxContainer/CenterContainer/PointsContainer/BestScoresLabel
+
 var remaining_time: int = 0
+var last_scores: int = 0
 
 signal restart_pressed
 signal menu_pressed
@@ -24,6 +31,7 @@ signal pause_pressed
 
 func _ready():
 	points_text.text = "0"
+
 
 func start_countdown(time = countdown_time):
 	countdown_text.text = time as String
@@ -45,6 +53,7 @@ func set_interface_state(new_state: int):
 
 
 func set_points_count(new_value: String):
+	last_scores = new_value as int
 	points_text.text = new_value
 
 
@@ -86,7 +95,11 @@ func _set_game_state():
 func _set_lose_state():
 	_hide_all_interfaces()
 	buttons.visible = true
-	
+	var best_scores = Setting.get_setting("player", "best_scores")
+	lose_scores.text = last_scores_pattern %[last_scores as String]
+	lose_best_scores.text = best_scores_pattern %[best_scores as String]
+
+
 func _set_pause_state():
 	_hide_all_interfaces()
 	int_pause.visible = true
@@ -108,9 +121,10 @@ func _on_sound_toggled(button_pressed):
 func _on_pause_pressed():
 	get_tree().paused = true
 	emit_signal("pause_pressed", true)
-	
 
 
 func _on_continue_pressed():
 	get_tree().paused = false
 	emit_signal("pause_pressed", false)
+
+

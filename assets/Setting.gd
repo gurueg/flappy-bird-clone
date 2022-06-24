@@ -1,6 +1,6 @@
 extends Node
 
-const SAVE_PATH = "res://config.cfg"
+const SAVE_PATH = "user://config.cfg"
 var _config_file = ConfigFile.new()
 
 var _settings = {

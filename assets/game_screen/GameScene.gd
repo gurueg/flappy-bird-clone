@@ -54,7 +54,6 @@ func _process(delta):
 
 func on_bird_collision():
 	is_game_over = true
-	interface.set_interface_state(interface.InterfaceStates.LOSE)
 	bird.set_bird_active(false)
 	
 	var best_scores: int = Setting.get_setting("player", "best_scores") as int
@@ -62,6 +61,8 @@ func on_bird_collision():
 	if best_scores < _tubes_count:
 		Setting.set_setting("player", "best_scores", _tubes_count)
 		Setting.save_settings()
+	
+	interface.set_interface_state(interface.InterfaceStates.LOSE)
 
 
 func on_tube_counted():

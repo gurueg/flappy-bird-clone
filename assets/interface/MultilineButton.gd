@@ -1,5 +1,5 @@
 tool
-extends Button
+extends TextureButton
 
 
 export var button_text : String = ""
@@ -19,5 +19,5 @@ func _process(delta):
 	if button_min_width:
 		rect_min_size.x = button_min_width
 	yield(get_tree(), "idle_frame")
-	rect_min_size.y = text_object.get_content_height()
+	rect_min_size.y = text_object.get_content_height() + 6
 
